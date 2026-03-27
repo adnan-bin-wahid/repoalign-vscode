@@ -1,25 +1,50 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import ignore from 'ignore';
 
-function scanFilesRecursively(folderPath: string, ignoredFolders: Set<string>): string[] {
+function loadGitIgnore(basePath: string) {
+	const ig = ignore();
+
+	const gitignorePath = path.join(basePath, '.gitignore');
+
+	if (fs.existsSync(gitignorePath)) {
+		const gitignoreContent = fs.readFileSync(gitignorePath, 'utf-8');
+		ig.add(gitignoreContent);
+	}
+
+	return ig;
+}
+
+function scanFilesRecursively(
+	folderPath: string,
+	basePath: string,
+	ig: ReturnType<typeof ignore>,
+	allowedExtensions: Set<string>
+): string[] {
 	let results: string[] = [];
 
 	const items = fs.readdirSync(folderPath);
 
 	for (const item of items) {
 		const fullPath = path.join(folderPath, item);
+		const relativePath = path.relative(basePath, fullPath).replace(/\\/g, '/');
+
+		if (ig.ignores(relativePath)) {
+			continue;
+		}
+
 		const stats = fs.statSync(fullPath);
 
 		if (stats.isDirectory()) {
-			if (ignoredFolders.has(item)) {
-				continue;
-			}
-
-			const nestedFiles = scanFilesRecursively(fullPath, ignoredFolders);
+			const nestedFiles = scanFilesRecursively(fullPath, basePath, ig, allowedExtensions);
 			results = results.concat(nestedFiles);
 		} else {
-			results.push(fullPath);
+			const extension = path.extname(item).toLowerCase();
+
+			if (allowedExtensions.has(extension)) {
+				results.push(fullPath);
+			}
 		}
 	}
 
@@ -28,6 +53,8 @@ function scanFilesRecursively(folderPath: string, ignoredFolders: Set<string>): 
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('RepoAlign extension is now active.');
+
+	const outputChannel = vscode.window.createOutputChannel('RepoAlign');
 
 	const startCommand = vscode.commands.registerCommand('repoalign.start', () => {
 		vscode.window.showInformationMessage('RepoAlign is running successfully!');
@@ -109,36 +136,62 @@ export function activate(context: vscode.ExtensionContext) {
 		const firstWorkspaceFolder = workspaceFolders[0];
 		const folderPath = firstWorkspaceFolder.uri.fsPath;
 
-		const ignoredFolders = new Set([
-			'node_modules',
-			'.git',
-			'dist',
-			'out',
-			'.next',
-			'build'
+		const allowedExtensions = new Set([
+			'.ts',
+			'.js',
+			'.json',
+			'.md',
+			'.html',
+			'.css',
+			'.scss'
 		]);
 
 		try {
-			const allFiles = scanFilesRecursively(folderPath, ignoredFolders);
+			const ig = loadGitIgnore(folderPath);
+			const allFiles = scanFilesRecursively(folderPath, folderPath, ig, allowedExtensions);
+
+			outputChannel.clear();
+			outputChannel.show(true);
+
+			outputChannel.appendLine('=== RepoAlign Workspace Scan ===');
+			outputChannel.appendLine(`Workspace path: ${folderPath}`);
+			outputChannel.appendLine(`Total useful files: ${allFiles.length}`);
+			outputChannel.appendLine('Rules: .gitignore respected, extension filtered');
+			outputChannel.appendLine('');
 
 			if (allFiles.length === 0) {
-				vscode.window.showInformationMessage('No files were found in the workspace.');
+				outputChannel.appendLine('No matching source files found.');
+				vscode.window.showInformationMessage('No matching source files found.');
 				return;
 			}
 
-			const sampleFiles = allFiles.slice(0, 10).map(file => path.relative(folderPath, file));
-			const message = `Found ${allFiles.length} files. Sample: ${sampleFiles.join(', ')}`;
+			outputChannel.appendLine('Scanned files:');
+			outputChannel.appendLine('------------------------------');
 
-			vscode.window.showInformationMessage(message);
-			console.log(`Workspace path: ${folderPath}`);
-			console.log(`Total files found: ${allFiles.length}`);
-			console.log('Sample files:', sampleFiles);
+			for (const file of allFiles.slice(0, 200)) {
+				const relativePath = path.relative(folderPath, file).replace(/\\/g, '/');
+				outputChannel.appendLine(relativePath);
+			}
+
+			if (allFiles.length > 200) {
+				outputChannel.appendLine('');
+				outputChannel.appendLine(`...and ${allFiles.length - 200} more files`);
+			}
+
+			vscode.window.showInformationMessage(
+				`RepoAlign scanned ${allFiles.length} useful files. See Output panel for details.`
+			);
 		} catch (error) {
-			vscode.window.showErrorMessage('Failed to scan workspace recursively.');
+			outputChannel.appendLine('Scan failed.');
+			outputChannel.appendLine(String(error));
+			outputChannel.show(true);
+
+			vscode.window.showErrorMessage('Failed to scan workspace.');
 			console.error(error);
 		}
 	});
 
+	context.subscriptions.push(outputChannel);
 	context.subscriptions.push(startCommand);
 	context.subscriptions.push(checkRepoCommand);
 	context.subscriptions.push(showWorkspacePathCommand);
