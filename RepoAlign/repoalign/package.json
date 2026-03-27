@@ -40,6 +40,18 @@
 {
   "command": "repoalign.extractTypeScriptImports",
   "title": "RepoAlign: Extract TypeScript Imports"
+},
+{
+  "command": "repoalign.resolveLocalImports",
+  "title": "RepoAlign: Resolve Local Imports"
+},
+{
+  "command": "repoalign.buildDependencyGraph",
+  "title": "RepoAlign: Build Dependency Graph"
+},
+{
+  "command": "repoalign.analyzeDependencyPatterns",
+  "title": "RepoAlign: Analyze Dependency Patterns"
 }
     ]
   },

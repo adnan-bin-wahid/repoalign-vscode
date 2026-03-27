@@ -6,6 +6,9 @@ import { registerListWorkspaceFilesCommand } from './commands/listWorkspaceFiles
 import { registerScanWorkspaceRecursivelyCommand } from './commands/scanWorkspaceRecursivelyCommand';
 import { registerClassifyWorkspaceFilesCommand } from './commands/classifyWorkspaceFilesCommand';
 import { registerExtractTypeScriptImportsCommand } from './commands/extractTypeScriptImportsCommand';
+import { registerResolveLocalImportsCommand } from './commands/resolveLocalImportsCommand';
+import { registerBuildDependencyGraphCommand } from './commands/buildDependencyGraphCommand';
+import { registerAnalyzeDependencyPatternsCommand } from './commands/analyzeDependencyPatternsCommand';
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('RepoAlign extension is now active.');
@@ -20,6 +23,9 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(registerScanWorkspaceRecursivelyCommand(outputChannel));
 	context.subscriptions.push(registerClassifyWorkspaceFilesCommand(outputChannel));
 	context.subscriptions.push(registerExtractTypeScriptImportsCommand(outputChannel));
+	context.subscriptions.push(registerResolveLocalImportsCommand(outputChannel));
+	context.subscriptions.push(registerBuildDependencyGraphCommand(outputChannel));
+	context.subscriptions.push(registerAnalyzeDependencyPatternsCommand(outputChannel));
 }
 
 export function deactivate() {}
