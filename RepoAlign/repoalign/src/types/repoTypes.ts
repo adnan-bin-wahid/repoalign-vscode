@@ -1,0 +1,17 @@
+export type FileCategory =
+	| 'Components'
+	| 'Services'
+	| 'Models'
+	| 'Interceptors'
+	| 'Guards'
+	| 'Modules'
+	| 'Routing'
+	| 'Tests'
+	| 'Templates'
+	| 'Styles'
+	| 'Config'
+	| 'TypeScript Files'
+	| 'JavaScript Files'
+	| 'JSON Files'
+	| 'Documentation'
+	| 'Other';
