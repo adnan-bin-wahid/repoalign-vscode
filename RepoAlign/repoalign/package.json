@@ -36,6 +36,10 @@
       {
   "command": "repoalign.classifyWorkspaceFiles",
   "title": "RepoAlign: Classify Workspace Files"
+}, 
+{
+  "command": "repoalign.extractTypeScriptImports",
+  "title": "RepoAlign: Extract TypeScript Imports"
 }
     ]
   },

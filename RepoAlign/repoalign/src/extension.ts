@@ -162,6 +162,34 @@ function appendCategoryToOutput(
 	outputChannel.appendLine('');
 }
 
+function extractImportsFromTypeScriptFile(filePath: string): string[] {
+	try {
+		const content = fs.readFileSync(filePath, 'utf-8');
+
+		const importRegex = /import\s+.*?\s+from\s+['"](.*?)['"]/g;
+		const imports: string[] = [];
+
+		let match: RegExpExecArray | null;
+
+		while ((match = importRegex.exec(content)) !== null) {
+			imports.push(match[1]);
+		}
+
+		return imports;
+	} catch (error) {
+		console.error(`Failed to read imports from file: ${filePath}`, error);
+		return [];
+	}
+}
+
+function getTypeScriptFiles(allFiles: string[]): string[] {
+	return allFiles.filter(file => file.toLowerCase().endsWith('.ts'));
+}
+
+function isLocalImport(importPath: string): boolean {
+	return importPath.startsWith('./') || importPath.startsWith('../');
+}
+
 export function activate(context: vscode.ExtensionContext) {
 	console.log('RepoAlign extension is now active.');
 
@@ -374,6 +402,78 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	});
 
+	const extractTypeScriptImportsCommand = vscode.commands.registerCommand('repoalign.extractTypeScriptImports', () => {
+		const workspaceFolders = vscode.workspace.workspaceFolders;
+
+		if (!workspaceFolders || workspaceFolders.length === 0) {
+			vscode.window.showWarningMessage('No workspace folder is currently open.');
+			return;
+		}
+
+		const firstWorkspaceFolder = workspaceFolders[0];
+		const folderPath = firstWorkspaceFolder.uri.fsPath;
+
+		const allowedExtensions = new Set([
+			'.ts',
+			'.js',
+			'.json',
+			'.md',
+			'.html',
+			'.css',
+			'.scss'
+		]);
+
+		try {
+			const ig = loadGitIgnore(folderPath);
+			const allFiles = scanFilesRecursively(folderPath, folderPath, ig, allowedExtensions);
+			const tsFiles = getTypeScriptFiles(allFiles);
+
+			outputChannel.clear();
+			outputChannel.show(true);
+
+			outputChannel.appendLine('=== RepoAlign TypeScript Import Extraction ===');
+			outputChannel.appendLine(`Workspace path: ${folderPath}`);
+			outputChannel.appendLine(`Total TypeScript files: ${tsFiles.length}`);
+			outputChannel.appendLine('');
+
+			if (tsFiles.length === 0) {
+				outputChannel.appendLine('No TypeScript files found.');
+				vscode.window.showInformationMessage('No TypeScript files found.');
+				return;
+			}
+
+			for (const file of tsFiles) {
+				const relativePath = path.relative(folderPath, file).replace(/\\/g, '/');
+				const imports = extractImportsFromTypeScriptFile(file);
+
+				outputChannel.appendLine(`FILE: ${relativePath}`);
+				outputChannel.appendLine('-'.repeat(6 + relativePath.length));
+
+				if (imports.length === 0) {
+					outputChannel.appendLine('  No imports found.');
+				} else {
+					for (const importPath of imports) {
+						const importType = isLocalImport(importPath) ? 'LOCAL' : 'EXTERNAL';
+						outputChannel.appendLine(`  [${importType}] ${importPath}`);
+					}
+				}
+
+				outputChannel.appendLine('');
+			}
+
+			vscode.window.showInformationMessage(
+				`RepoAlign extracted imports from ${tsFiles.length} TypeScript files. See Output panel for details.`
+			);
+		} catch (error) {
+			outputChannel.appendLine('Import extraction failed.');
+			outputChannel.appendLine(String(error));
+			outputChannel.show(true);
+
+			vscode.window.showErrorMessage('Failed to extract TypeScript imports.');
+			console.error(error);
+		}
+	});
+
 	context.subscriptions.push(outputChannel);
 	context.subscriptions.push(startCommand);
 	context.subscriptions.push(checkRepoCommand);
@@ -381,6 +481,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(listWorkspaceFilesCommand);
 	context.subscriptions.push(scanWorkspaceRecursivelyCommand);
 	context.subscriptions.push(classifyWorkspaceFilesCommand);
+	context.subscriptions.push(extractTypeScriptImportsCommand);
 }
 
 export function deactivate() {}
