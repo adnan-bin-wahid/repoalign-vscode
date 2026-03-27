@@ -32,7 +32,11 @@
       {
         "command": "repoalign.scanWorkspaceRecursively",
         "title": "RepoAlign: Scan Workspace Recursively"
-      }
+      },
+      {
+  "command": "repoalign.classifyWorkspaceFiles",
+  "title": "RepoAlign: Classify Workspace Files"
+}
     ]
   },
   "scripts": {
