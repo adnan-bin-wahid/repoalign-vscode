@@ -52,6 +52,18 @@
 {
   "command": "repoalign.analyzeDependencyPatterns",
   "title": "RepoAlign: Analyze Dependency Patterns"
+},
+{
+  "command": "repoalign.detectSuspiciousPatterns",
+  "title": "RepoAlign: Detect Suspicious Dependency Patterns"
+},
+{
+  "command": "repoalign.rankSuspiciousFiles",
+  "title": "RepoAlign: Rank Suspicious Files"
+},
+{
+  "command": "repoalign.explainSuspiciousFiles",
+  "title": "RepoAlign: Explain Suspicious Files"
 }
     ]
   },

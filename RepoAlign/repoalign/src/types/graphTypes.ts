@@ -17,3 +17,11 @@ export interface DependencyPatternEdge {
 	toCategory: string;
 	pattern: string;
 }
+
+export interface SuspiciousFileExplanation {
+	file: string;
+	suspiciousEdgeCount: number;
+	confidence: 'Low' | 'Medium' | 'High';
+	reasons: string[];
+	edges: DependencyPatternEdge[];
+}

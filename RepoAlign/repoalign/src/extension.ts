@@ -9,6 +9,9 @@ import { registerExtractTypeScriptImportsCommand } from './commands/extractTypeS
 import { registerResolveLocalImportsCommand } from './commands/resolveLocalImportsCommand';
 import { registerBuildDependencyGraphCommand } from './commands/buildDependencyGraphCommand';
 import { registerAnalyzeDependencyPatternsCommand } from './commands/analyzeDependencyPatternsCommand';
+import { registerDetectSuspiciousPatternsCommand } from './commands/detectSuspiciousPatternsCommand';
+import { registerRankSuspiciousFilesCommand } from './commands/rankSuspiciousFilesCommand';
+import { registerExplainSuspiciousFilesCommand } from './commands/explainSuspiciousFilesCommand';
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('RepoAlign extension is now active.');
@@ -26,6 +29,9 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(registerResolveLocalImportsCommand(outputChannel));
 	context.subscriptions.push(registerBuildDependencyGraphCommand(outputChannel));
 	context.subscriptions.push(registerAnalyzeDependencyPatternsCommand(outputChannel));
+	context.subscriptions.push(registerDetectSuspiciousPatternsCommand(outputChannel));
+	context.subscriptions.push(registerRankSuspiciousFilesCommand(outputChannel));
+	context.subscriptions.push(registerExplainSuspiciousFilesCommand(outputChannel));
 }
 
 export function deactivate() {}
