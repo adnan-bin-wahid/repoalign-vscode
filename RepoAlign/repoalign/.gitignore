@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+
+# TypeScript build output
+out/
+*.tsbuildinfo
+
+# VS Code extension test artifacts
+.vscode-test/
+.vscode-test-web/
+
+# Local editor/workspace settings
+.vscode/
+*.code-workspace
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment and local overrides
+.env
+.env.*
+*.local
+
+# Coverage and cache
+coverage/
+.nyc_output/
+.eslintcache
+.cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
