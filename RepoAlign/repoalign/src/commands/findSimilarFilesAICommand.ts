@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { findSimilarFiles } from '../utils/apiClient';
+import { findSimilarFiles, getIndexStatus, rebuildProfileIndex } from '../utils/apiClient';
 import { loadGitIgnore } from '../utils/gitignore';
 import {
 	DEFAULT_ALLOWED_EXTENSIONS,
@@ -63,11 +63,58 @@ export function registerFindSimilarFilesAICommand(outputChannel: vscode.OutputCh
 			outputChannel.clear();
 			outputChannel.show(true);
 
+			const queryRelativePath = path.relative(workspacePath, queryFilePath).replace(/\\/g, '/');
+
 			outputChannel.appendLine('=== RepoAlign AI Similar File Retrieval ===');
 			outputChannel.appendLine(`Workspace path: ${workspacePath}`);
-			outputChannel.appendLine(`Query file: ${queryFilePath}`);
+			outputChannel.appendLine(`Query file: ${queryRelativePath}`);
 			outputChannel.appendLine(`Candidate TypeScript files: ${typeScriptFiles.length}`);
+			outputChannel.appendLine('Retrieval mode: semantic profile embedding');
 			outputChannel.appendLine('');
+
+			const indexStatus = await getIndexStatus();
+
+			outputChannel.appendLine('Index status:');
+			outputChannel.appendLine('------------------------------');
+			outputChannel.appendLine(`Indexed workspace: ${indexStatus.workspace_path}`);
+			outputChannel.appendLine(`Indexed at: ${indexStatus.indexed_at}`);
+			outputChannel.appendLine(`Indexed files: ${indexStatus.indexed_total_files}`);
+			outputChannel.appendLine(`Current files: ${indexStatus.current_total_files}`);
+			outputChannel.appendLine(`Is stale: ${indexStatus.is_stale}`);
+			outputChannel.appendLine('');
+
+			if (indexStatus.is_stale) {
+				outputChannel.appendLine(
+					'Warning: semantic profile index is stale. Retrieval may use outdated repository semantics.'
+				);
+				outputChannel.appendLine('');
+
+				const rebuildChoice = await vscode.window.showWarningMessage(
+					'RepoAlign index is stale. Rebuild the semantic index now before retrieval?',
+					'Yes, rebuild now',
+					'No, continue anyway'
+				);
+
+				if (rebuildChoice === 'Yes, rebuild now') {
+					outputChannel.appendLine('Rebuilding semantic index before retrieval...');
+					outputChannel.appendLine('');
+
+					const rebuildResult = await rebuildProfileIndex(workspacePath);
+
+					outputChannel.appendLine('Semantic index rebuild completed.');
+					outputChannel.appendLine(`Indexed workspace: ${rebuildResult.workspace_path}`);
+					outputChannel.appendLine(`Total indexed files: ${rebuildResult.total_files}`);
+					outputChannel.appendLine(`Output path: ${rebuildResult.output_path}`);
+					outputChannel.appendLine('');
+
+					vscode.window.showInformationMessage(
+						`RepoAlign rebuilt the semantic index for ${rebuildResult.total_files} files.`
+					);
+				} else {
+					outputChannel.appendLine('Continuing retrieval with stale semantic index.');
+					outputChannel.appendLine('');
+				}
+			}
 
 			const result = await findSimilarFiles(queryFilePath, typeScriptFiles, 5);
 
@@ -84,14 +131,31 @@ export function registerFindSimilarFilesAICommand(outputChannel: vscode.OutputCh
 
 			for (const item of result.results) {
 				const relativePath = path.relative(workspacePath, item.file_path).replace(/\\/g, '/');
+
 				outputChannel.appendLine(`${rank}. ${relativePath}`);
 				outputChannel.appendLine(`   Similarity: ${item.similarity}`);
+				outputChannel.appendLine(`   Role: ${item.role ?? 'unknown'}`);
+
+				if (item.class_names && item.class_names.length > 0) {
+					outputChannel.appendLine(`   Class names: ${item.class_names.join(', ')}`);
+				} else {
+					outputChannel.appendLine('   Class names: None');
+				}
+
+				if (item.constructor_injections && item.constructor_injections.length > 0) {
+					outputChannel.appendLine(
+						`   Constructor injections: ${item.constructor_injections.join(', ')}`
+					);
+				} else {
+					outputChannel.appendLine('   Constructor injections: None');
+				}
+
 				outputChannel.appendLine('');
 				rank++;
 			}
 
 			vscode.window.showInformationMessage(
-				`RepoAlign found ${result.results.length} similar files. See Output panel for details.`
+				`RepoAlign found ${result.results.length} semantically similar files. See Output panel for details.`
 			);
 		} catch (error: any) {
 			outputChannel.appendLine('AI similar file retrieval failed.');

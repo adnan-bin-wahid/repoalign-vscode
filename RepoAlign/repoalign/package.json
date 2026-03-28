@@ -77,6 +77,10 @@
 {
   "command": "repoalign.compareActiveFilePatterns",
   "title": "RepoAlign: Compare Active File Against Similar Files"
+},
+{
+  "command": "repoalign.rebuildSemanticIndex",
+  "title": "RepoAlign: Rebuild Semantic Index"
 }
     ]
   },

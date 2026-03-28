@@ -15,6 +15,7 @@ import { registerExplainSuspiciousFilesCommand } from './commands/explainSuspici
 import { registerCheckBackendCommand } from './commands/checkBackendCommand';
 import { registerFindSimilarFilesAICommand } from './commands/findSimilarFilesAICommand';
 import { registerCompareActiveFilePatternsCommand } from './commands/compareActiveFilePatternsCommand';
+import { registerRebuildSemanticIndexCommand } from './commands/rebuildSemanticIndexCommand';
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('RepoAlign extension is now active.');
@@ -38,6 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(registerCheckBackendCommand(outputChannel));
 	context.subscriptions.push(registerFindSimilarFilesAICommand(outputChannel));
 	context.subscriptions.push(registerCompareActiveFilePatternsCommand(outputChannel));
+	context.subscriptions.push(registerRebuildSemanticIndexCommand(outputChannel));
 }
 
 export function deactivate() {}

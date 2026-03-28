@@ -7,6 +7,20 @@ export async function checkBackendHealth() {
 	return response.data;
 }
 
+export async function getIndexStatus() {
+	const response = await axios.get(`${BASE_URL}/index-status`);
+	return response.data;
+}
+
+export async function rebuildProfileIndex(workspacePath: string) {
+	const response = await axios.post(`${BASE_URL}/build-profile-index`, {
+		workspace_path: workspacePath,
+		output_path: 'data/profile_index.json'
+	});
+
+	return response.data;
+}
+
 export async function findSimilarFiles(
 	queryFilePath: string,
 	candidateFilePaths: string[],
