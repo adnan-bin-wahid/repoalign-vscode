@@ -9,7 +9,21 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:repoalign.start",
+    "onCommand:repoalign.checkRepo",
+    "onCommand:repoalign.showWorkspacePath",
+    "onCommand:repoalign.listWorkspaceFiles",
+    "onCommand:repoalign.scanWorkspaceRecursively",
+    "onCommand:repoalign.classifyWorkspaceFiles",
+    "onCommand:repoalign.extractTypeScriptImports",
+    "onCommand:repoalign.resolveLocalImports",
+    "onCommand:repoalign.buildDependencyGraph",
+    "onCommand:repoalign.analyzeDependencyPatterns",
+    "onCommand:repoalign.detectSuspiciousPatterns",
+    "onCommand:repoalign.rankSuspiciousFiles",
+    "onCommand:repoalign.explainSuspiciousFiles"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -34,37 +48,37 @@
         "title": "RepoAlign: Scan Workspace Recursively"
       },
       {
-  "command": "repoalign.classifyWorkspaceFiles",
-  "title": "RepoAlign: Classify Workspace Files"
-}, 
-{
-  "command": "repoalign.extractTypeScriptImports",
-  "title": "RepoAlign: Extract TypeScript Imports"
-},
-{
-  "command": "repoalign.resolveLocalImports",
-  "title": "RepoAlign: Resolve Local Imports"
-},
-{
-  "command": "repoalign.buildDependencyGraph",
-  "title": "RepoAlign: Build Dependency Graph"
-},
-{
-  "command": "repoalign.analyzeDependencyPatterns",
-  "title": "RepoAlign: Analyze Dependency Patterns"
-},
-{
-  "command": "repoalign.detectSuspiciousPatterns",
-  "title": "RepoAlign: Detect Suspicious Dependency Patterns"
-},
-{
-  "command": "repoalign.rankSuspiciousFiles",
-  "title": "RepoAlign: Rank Suspicious Files"
-},
-{
-  "command": "repoalign.explainSuspiciousFiles",
-  "title": "RepoAlign: Explain Suspicious Files"
-}
+        "command": "repoalign.classifyWorkspaceFiles",
+        "title": "RepoAlign: Classify Workspace Files"
+      },
+      {
+        "command": "repoalign.extractTypeScriptImports",
+        "title": "RepoAlign: Extract TypeScript Imports"
+      },
+      {
+        "command": "repoalign.resolveLocalImports",
+        "title": "RepoAlign: Resolve Local Imports"
+      },
+      {
+        "command": "repoalign.buildDependencyGraph",
+        "title": "RepoAlign: Build Dependency Graph"
+      },
+      {
+        "command": "repoalign.analyzeDependencyPatterns",
+        "title": "RepoAlign: Analyze Dependency Patterns"
+      },
+      {
+        "command": "repoalign.detectSuspiciousPatterns",
+        "title": "RepoAlign: Detect Suspicious Dependency Patterns"
+      },
+      {
+        "command": "repoalign.rankSuspiciousFiles",
+        "title": "RepoAlign: Rank Suspicious Files"
+      },
+      {
+        "command": "repoalign.explainSuspiciousFiles",
+        "title": "RepoAlign: Explain Suspicious Files"
+      }
     ]
   },
   "scripts": {

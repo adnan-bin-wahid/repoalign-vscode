@@ -10,7 +10,7 @@ out/
 .vscode-test-web/
 
 # Local editor/workspace settings
-.vscode/
+#.vscode/
 *.code-workspace
 
 # Logs
