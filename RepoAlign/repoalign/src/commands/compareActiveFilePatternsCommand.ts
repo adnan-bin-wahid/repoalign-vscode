@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { findSimilarFiles } from '../utils/apiClient';
+import { findSimilarFiles, getIndexStatus, rebuildProfileIndex } from '../utils/apiClient';
 import { loadGitIgnore } from '../utils/gitignore';
 import {
 	DEFAULT_ALLOWED_EXTENSIONS,
@@ -23,8 +23,7 @@ function getPatternComparisonSummary(
 	sharedPatterns: string[],
 	activeOnlyPatterns: string[],
 	similarOnlyPatterns: string[],
-	roleMatch: boolean,
-	sharedInjections: string[]
+	roleMatch: boolean
 ): string {
 	if (
 		roleMatch &&
@@ -38,7 +37,6 @@ function getPatternComparisonSummary(
 	if (
 		roleMatch &&
 		sharedPatterns.length > 0 &&
-		sharedInjections.length > 0 &&
 		activeOnlyPatterns.length === 0
 	) {
 		return 'Good alignment: semantic role matches and dependency behavior is similar.';
@@ -103,9 +101,6 @@ export function registerCompareActiveFilePatternsCommand(outputChannel: vscode.O
 				return;
 			}
 
-			const similarityResult = await findSimilarFiles(activeFilePath, typeScriptFiles, 3);
-			const similarResults = similarityResult.results ?? [];
-
 			const dependencyGraph = buildDependencyGraph(workspacePath, typeScriptFiles);
 			const patternEdges = buildDependencyPatternEdges(dependencyGraph.edges);
 
@@ -118,8 +113,52 @@ export function registerCompareActiveFilePatternsCommand(outputChannel: vscode.O
 			outputChannel.appendLine('=== RepoAlign Active File Semantic + Pattern Comparison ===');
 			outputChannel.appendLine(`Workspace path: ${workspacePath}`);
 			outputChannel.appendLine(`Active file: ${activeRelativePath}`);
-			outputChannel.appendLine(`Comparison mode: semantic profile retrieval + graph pattern verification`);
+			outputChannel.appendLine('Comparison mode: indexed semantic retrieval + graph pattern verification');
 			outputChannel.appendLine('');
+
+			const indexStatus = await getIndexStatus();
+
+			outputChannel.appendLine('Semantic index status:');
+			outputChannel.appendLine('------------------------------');
+			outputChannel.appendLine(`Indexed workspace: ${indexStatus.workspace_path}`);
+			outputChannel.appendLine(`Indexed at: ${indexStatus.indexed_at}`);
+			outputChannel.appendLine(`Indexed files: ${indexStatus.indexed_total_files}`);
+			outputChannel.appendLine(`Current files: ${indexStatus.current_total_files}`);
+			outputChannel.appendLine(`Is stale: ${indexStatus.is_stale}`);
+			outputChannel.appendLine('');
+
+			if (indexStatus.is_stale) {
+				outputChannel.appendLine(
+					'Warning: semantic profile index is stale. Comparison may use outdated repository semantics.'
+				);
+				outputChannel.appendLine('');
+
+				const rebuildChoice = await vscode.window.showWarningMessage(
+					'RepoAlign index is stale. Rebuild the semantic index now before comparison?',
+					'Yes, rebuild now',
+					'No, continue anyway'
+				);
+
+				if (rebuildChoice === 'Yes, rebuild now') {
+					outputChannel.appendLine('Rebuilding semantic index before comparison...');
+					outputChannel.appendLine('');
+
+					const rebuildResult = await rebuildProfileIndex(workspacePath);
+
+					outputChannel.appendLine('Semantic index rebuild completed.');
+					outputChannel.appendLine(`Indexed workspace: ${rebuildResult.workspace_path}`);
+					outputChannel.appendLine(`Total indexed files: ${rebuildResult.total_files}`);
+					outputChannel.appendLine(`Output path: ${rebuildResult.output_path}`);
+					outputChannel.appendLine('');
+
+					vscode.window.showInformationMessage(
+						`RepoAlign rebuilt the semantic index for ${rebuildResult.total_files} files.`
+					);
+				} else {
+					outputChannel.appendLine('Continuing comparison with stale semantic index.');
+					outputChannel.appendLine('');
+				}
+			}
 
 			outputChannel.appendLine('Active file dependency patterns:');
 			outputChannel.appendLine('------------------------------');
@@ -136,11 +175,20 @@ export function registerCompareActiveFilePatternsCommand(outputChannel: vscode.O
 			outputChannel.appendLine('Retrieved semantic peers and graph comparison:');
 			outputChannel.appendLine('------------------------------');
 
+			const similarityResult = await findSimilarFiles(activeFilePath, typeScriptFiles, 3);
+			const similarResults = similarityResult.results ?? [];
+
 			if (similarResults.length === 0) {
 				outputChannel.appendLine('No similar files found.');
 				vscode.window.showInformationMessage('No similar files found.');
 				return;
 			}
+
+			const activeRole = activeRelativePath.toLowerCase().endsWith('.component.ts')
+				? 'component'
+				: activeRelativePath.toLowerCase().endsWith('.service.ts')
+					? 'service'
+					: 'unknown';
 
 			let index = 1;
 
@@ -149,34 +197,38 @@ export function registerCompareActiveFilePatternsCommand(outputChannel: vscode.O
 				const similarRelativePath = path.relative(workspacePath, similarFilePath).replace(/\\/g, '/');
 				const similarPatterns = getUniquePatternsForFile(similarRelativePath, patternEdges);
 
-				const activeRole = 'component';
 				const similarRole = item.role ?? 'unknown';
 				const roleMatch = activeRole === similarRole;
-
-				const activeClassName = path.basename(activeRelativePath, '.ts');
-				const similarClassNames: string[] = item.class_names ?? [];
-				const activeInjections: string[] = [];
-				const similarInjections: string[] = item.constructor_injections ?? [];
 
 				const sharedPatterns = getSharedItems(activePatterns, similarPatterns);
 				const activeOnlyPatterns = getOnlyItems(activePatterns, similarPatterns);
 				const similarOnlyPatterns = getOnlyItems(similarPatterns, activePatterns);
-				const sharedInjections = getSharedItems(activeInjections, similarInjections);
 
 				const summary = getPatternComparisonSummary(
 					sharedPatterns,
 					activeOnlyPatterns,
 					similarOnlyPatterns,
-					roleMatch,
-					sharedInjections
+					roleMatch
 				);
 
 				outputChannel.appendLine(`${index}. ${similarRelativePath}`);
 				outputChannel.appendLine(`   Similarity score: ${item.similarity}`);
 				outputChannel.appendLine(`   Retrieved role: ${similarRole}`);
 				outputChannel.appendLine(`   Role match: ${roleMatch ? 'Yes' : 'No'}`);
-				outputChannel.appendLine(`   Retrieved class names: ${similarClassNames.length > 0 ? similarClassNames.join(', ') : 'None'}`);
-				outputChannel.appendLine(`   Retrieved constructor injections: ${similarInjections.length > 0 ? similarInjections.join(', ') : 'None'}`);
+				outputChannel.appendLine(
+					`   Retrieved class names: ${
+						item.class_names && item.class_names.length > 0
+							? item.class_names.join(', ')
+							: 'None'
+					}`
+				);
+				outputChannel.appendLine(
+					`   Retrieved constructor injections: ${
+						item.constructor_injections && item.constructor_injections.length > 0
+							? item.constructor_injections.join(', ')
+							: 'None'
+					}`
+				);
 				outputChannel.appendLine(`   Summary: ${summary}`);
 
 				outputChannel.appendLine('   Shared dependency patterns:');

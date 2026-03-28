@@ -47,6 +47,31 @@ def get_latest_file_mtime(file_paths: list[str]) -> float:
     return latest_mtime
 
 
+def infer_simple_pattern_set(profile: dict) -> list[str]:
+    role = profile["role"]
+    patterns = []
+
+    for import_path in profile["imports"]:
+        lower = import_path.lower()
+
+        if ".service" in lower:
+            patterns.append(f"{role}->service")
+        elif ".model" in lower:
+            patterns.append(f"{role}->model")
+        elif ".component" in lower:
+            patterns.append(f"{role}->component")
+        elif ".guard" in lower:
+            patterns.append(f"{role}->guard")
+        elif "route" in lower:
+            patterns.append(f"{role}->routing")
+
+    for service_call in profile["service_calls"]:
+        if "." in service_call:
+            patterns.append(f"{role}->service-call")
+
+    return sorted(list(set(patterns)))
+
+
 def build_profile_index(workspace_path: str) -> dict:
     file_paths = scan_typescript_files(workspace_path)
 
@@ -54,6 +79,7 @@ def build_profile_index(workspace_path: str) -> dict:
 
     for file_path in file_paths:
         profile = build_file_profile(file_path)
+        profile["pattern_set"] = infer_simple_pattern_set(profile)
         embedding = embed_text(profile["profile_text"])
 
         indexed_files.append({
@@ -66,6 +92,7 @@ def build_profile_index(workspace_path: str) -> dict:
             "method_names": profile["method_names"],
             "service_calls": profile["service_calls"],
             "path_keywords": profile["path_keywords"],
+            "pattern_set": profile["pattern_set"],
             "profile_text": profile["profile_text"],
             "embedding": embedding
         })

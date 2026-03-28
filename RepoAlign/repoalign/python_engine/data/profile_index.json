@@ -1,7 +1,7 @@
 {
   "workspace_path": "E:\\KAZ\\Projects\\Auction",
   "total_files": 37,
-  "indexed_at": "2026-03-28T18:19:38.710080",
+  "indexed_at": "2026-03-28T19:24:35.724245",
   "latest_workspace_mtime": 1774721967.6011484,
   "files": [
     {
@@ -23,6 +23,7 @@
         "auction",
         "main"
       ],
+      "pattern_set": [],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\main.ts\nROLE: typescript-file\nCLASS_NAMES: None\nIMPORTS: @angular/platform-browser, ./app/app.config, ./app/app\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, main",
       "embedding": [
         -0.09921291470527649,
@@ -430,6 +431,9 @@
         "projects",
         "auction",
         "config"
+      ],
+      "pattern_set": [
+        "typescript-file->routing"
       ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\app.config.ts\nROLE: typescript-file\nCLASS_NAMES: None\nIMPORTS: @angular/common/http, @angular/router, ./core/interceptors/api-request.interceptor, ./app.routes\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, config",
       "embedding": [
@@ -847,6 +851,10 @@
         "auction",
         "routes"
       ],
+      "pattern_set": [
+        "routing->component",
+        "routing->routing"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\app.routes.ts\nROLE: routing\nCLASS_NAMES: None\nIMPORTS: @angular/router, ./components/home.component, ./components/login.component, ./components/register.component, ./components/auctions.component, ./components/auction-detail.component, ./components/user-bid-history.component, ./components/admin-dashboard.component, ./components/admin-product-management.component, ./components/admin-auction-management.component, ./components/admin-bid-activity.component, ./components/admin-winners-management.component\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, routes",
       "embedding": [
         -0.10778031498193741,
@@ -1253,6 +1261,7 @@
         "auction",
         "spec"
       ],
+      "pattern_set": [],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\app.spec.ts\nROLE: test\nCLASS_NAMES: None\nIMPORTS: @angular/core/testing, ./app\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, spec",
       "embedding": [
         -0.08992287516593933,
@@ -1679,6 +1688,12 @@
         "projects",
         "auction"
       ],
+      "pattern_set": [
+        "typescript-file->model",
+        "typescript-file->routing",
+        "typescript-file->service",
+        "typescript-file->service-call"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\app.ts\nROLE: typescript-file\nCLASS_NAMES: App\nIMPORTS: @angular/core, @angular/common, @angular/router, rxjs, ./shared/services/auth.service, ./shared/models/user.model, @angular/core/rxjs-interop\nCONSTRUCTOR_INJECTIONS: AuthService, ChangeDetectorRef, Router\nINJECTION_VARIABLES: authService, cdr, router\nMETHOD_NAMES: logout\nSERVICE_CALLS: cdr.markForCheck, authService.logout, router.navigate\nPATH_KEYWORDS: kaz, projects, auction",
       "embedding": [
         -0.1055159866809845,
@@ -2086,6 +2101,7 @@
         "product",
         "spec"
       ],
+      "pattern_set": [],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\product.spec.ts\nROLE: test\nCLASS_NAMES: None\nIMPORTS: @angular/core/testing, ./product\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, product, spec",
       "embedding": [
         -0.08628203719854355,
@@ -2502,6 +2518,7 @@
         "auction",
         "product"
       ],
+      "pattern_set": [],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\product.ts\nROLE: typescript-file\nCLASS_NAMES: ProductService\nIMPORTS: @angular/core, @angular/common/http, rxjs\nCONSTRUCTOR_INJECTIONS: HttpClient\nINJECTION_VARIABLES: http\nMETHOD_NAMES: getProducts, addProduct\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, product",
       "embedding": [
         -0.10681939870119095,
@@ -2962,6 +2979,11 @@
         "components",
         "a"
       ],
+      "pattern_set": [
+        "typescript-file->routing",
+        "typescript-file->service",
+        "typescript-file->service-call"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\components\\a.ts\nROLE: typescript-file\nCLASS_NAMES: UserBidHistoryComponent\nIMPORTS: @angular/core, @angular/common, @angular/forms, @angular/router, ../shared/services/bid.service, ../shared/services/auth.service, ../shared/services/auction.service, ../shared/services/winner.service, @angular/core/rxjs-interop\nCONSTRUCTOR_INJECTIONS: BidService, AuthService, AuctionService, WinnerService, Router, ChangeDetectorRef\nINJECTION_VARIABLES: bidService, authService, auctionService, winnerService, router, cdr\nMETHOD_NAMES: ngOnInit, loadUserWins, loadBidHistory, loadAuctionDetails, applyFilter, sortByDate, getAuctionProduct, getAuctionStatus, getTotalBidAmount, getAverageBid, getTotalWins, isWinningBid, viewAuction, goToAuctions, goBack\nSERVICE_CALLS: authService.getCurrentUser, router.navigate, winningAuctionIds.clear, userWins.forEach, winningAuctionIds.add, cdr.markForCheck, bidHistory.forEach, auctionCache.has, auctionService.getAuctionById, auctionCache.set, auctionCache.get, bidHistory.reduce, winningAuctionIds.has\nPATH_KEYWORDS: kaz, projects, auction, components, a",
       "embedding": [
         -0.11581075191497803,
@@ -3408,6 +3430,12 @@
         "admin",
         "management"
       ],
+      "pattern_set": [
+        "component->model",
+        "component->routing",
+        "component->service",
+        "component->service-call"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\components\\admin-auction-management.component.ts\nROLE: component\nCLASS_NAMES: AdminAuctionManagementComponent\nIMPORTS: @angular/core, @angular/common, @angular/forms, @angular/router, ../shared/services/auction.service, ../shared/services/product.service, ../shared/models/auction.model, ../shared/models/product.model, ../shared/services/auth.service, @angular/common/http\nCONSTRUCTOR_INJECTIONS: AuctionService, ProductService, AuthService, Router, ChangeDetectorRef\nINJECTION_VARIABLES: auctionService, productService, authService, router, cdr\nMETHOD_NAMES: ngOnInit, checkAdminAccess, loadProducts, loadAuctions, resetForm, submitForm, updateStatus, goBack\nSERVICE_CALLS: router.navigate, cdr.markForCheck, productService.getAllProducts, auctionService.getAllAuctions, auctionService.createAuction, auctionService.updateAuctionStatus\nPATH_KEYWORDS: kaz, projects, auction, components, admin, management",
       "embedding": [
         -0.11743857711553574,
@@ -3850,6 +3878,11 @@
         "bid",
         "activity"
       ],
+      "pattern_set": [
+        "component->routing",
+        "component->service",
+        "component->service-call"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\components\\admin-bid-activity.component.ts\nROLE: component\nCLASS_NAMES: AdminBidActivityComponent\nIMPORTS: @angular/core, @angular/common, @angular/router, ../shared/services/bid.service, ../shared/services/auction.service, ../shared/services/auth.service, @angular/core/rxjs-interop\nCONSTRUCTOR_INJECTIONS: BidService, AuctionService, AuthService, Router, ChangeDetectorRef, ActivatedRoute\nINJECTION_VARIABLES: bidService, auctionService, authService, router, cdr, route\nMETHOD_NAMES: ngOnInit, checkAdminAccess, loadBidActivity, loadAuctionStats, goBack\nSERVICE_CALLS: router.navigate, cdr.markForCheck, bidService.getBidsForAuction, auctionService.getAllAuctions, auctionBidStats.push\nPATH_KEYWORDS: kaz, projects, auction, components, admin, bid, activity",
       "embedding": [
         -0.10972040146589279,
@@ -4288,6 +4321,11 @@
         "components",
         "admin",
         "dashboard"
+      ],
+      "pattern_set": [
+        "component->routing",
+        "component->service",
+        "component->service-call"
       ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\components\\admin-dashboard.component.ts\nROLE: component\nCLASS_NAMES: AdminDashboardComponent\nIMPORTS: @angular/core, @angular/common, @angular/router, ../shared/services/product.service, ../shared/services/auction.service, ../shared/services/auth.service, @angular/core/rxjs-interop\nCONSTRUCTOR_INJECTIONS: ProductService, AuctionService, AuthService, Router, ChangeDetectorRef\nINJECTION_VARIABLES: productService, auctionService, authService, router, cdr\nMETHOD_NAMES: ngOnInit, checkAdminStatus, loadStats, refreshStats, navigateTo, goBack\nSERVICE_CALLS: cdr.markForCheck, productService.getAllProducts, auctionService.getAllAuctions, router.navigate\nPATH_KEYWORDS: kaz, projects, auction, components, admin, dashboard",
       "embedding": [
@@ -4732,6 +4770,12 @@
         "admin",
         "product",
         "management"
+      ],
+      "pattern_set": [
+        "component->model",
+        "component->routing",
+        "component->service",
+        "component->service-call"
       ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\components\\admin-product-management.component.ts\nROLE: component\nCLASS_NAMES: AdminProductManagementComponent\nIMPORTS: @angular/core, @angular/common, @angular/forms, @angular/router, ../shared/services/product.service, ../shared/models/product.model, ../shared/services/auth.service, @angular/common/http, @angular/core/rxjs-interop\nCONSTRUCTOR_INJECTIONS: ProductService, AuthService, Router, ChangeDetectorRef\nINJECTION_VARIABLES: productService, authService, router, cdr\nMETHOD_NAMES: ngOnInit, checkAdminAccess, loadProducts, editProduct, resetForm, submitForm, deleteProduct, goBack\nSERVICE_CALLS: router.navigate, cdr.markForCheck, productService.getAllProducts, productService.updateProduct, productService.createProduct, productService.deleteProduct\nPATH_KEYWORDS: kaz, projects, auction, components, admin, product, management",
       "embedding": [
@@ -5180,6 +5224,11 @@
         "admin",
         "winners",
         "management"
+      ],
+      "pattern_set": [
+        "component->routing",
+        "component->service",
+        "component->service-call"
       ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\components\\admin-winners-management.component.ts\nROLE: component\nCLASS_NAMES: AdminWinnersManagementComponent\nIMPORTS: @angular/core, @angular/common, @angular/router, ../shared/services/winner.service, ../shared/services/auction.service, ../shared/services/bid.service, ../shared/services/auth.service, @angular/common/http, @angular/core/rxjs-interop\nCONSTRUCTOR_INJECTIONS: WinnerService, AuctionService, BidService, AuthService, Router, ChangeDetectorRef\nINJECTION_VARIABLES: winnerService, auctionService, bidService, authService, router, cdr\nMETHOD_NAMES: ngOnInit, checkAdminAccess, loadWinners, loadClosedAuctionsWithoutWinners, assignWinner, removeWinner, goBack\nSERVICE_CALLS: router.navigate, cdr.markForCheck, auctionService.getAllAuctions, winnerService.getWinnerByAuction, bidService.getHighestBid, winnerService.assignWinner, winnerService.deleteWinner\nPATH_KEYWORDS: kaz, projects, auction, components, admin, winners, management",
       "embedding": [
@@ -5640,6 +5689,12 @@
         "components",
         "detail"
       ],
+      "pattern_set": [
+        "component->model",
+        "component->routing",
+        "component->service",
+        "component->service-call"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\components\\auction-detail.component.ts\nROLE: component\nCLASS_NAMES: AuctionDetailComponent\nIMPORTS: @angular/core, @angular/common, @angular/forms, @angular/router, ../shared/services/auction.service, ../shared/services/bid.service, ../shared/services/winner.service, ../shared/services/auth.service, ../shared/models/auction.model, ../shared/models/bid.model, ../shared/models/winner.model, @angular/common/http, @angular/core, @angular/core/rxjs-interop, rxjs/operators, rxjs\nCONSTRUCTOR_INJECTIONS: ActivatedRoute, AuctionService, BidService, WinnerService, AuthService, Router, ChangeDetectorRef\nINJECTION_VARIABLES: route, auctionService, bidService, winnerService, authService, router, cdr\nMETHOD_NAMES: ngOnInit, loadBids, loadHighestBid, loadWinner, checkIfAuctionActive, canBid, assignWinnerAndClose, submitBid, goBack\nSERVICE_CALLS: cdr.markForCheck, auctionService.getAuctionById, bidService.getBidsForAuction, bidService.getHighestBid, winnerService.getWinnerByAuction, auctionService.isAuctionActive, winnerService.assignWinner, bidService.placeBid, router.navigate\nPATH_KEYWORDS: kaz, projects, auction, components, detail",
       "embedding": [
         -0.1181475892663002,
@@ -6078,6 +6133,12 @@
         "components",
         "auctions"
       ],
+      "pattern_set": [
+        "component->model",
+        "component->routing",
+        "component->service",
+        "component->service-call"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\components\\auctions.component.ts\nROLE: component\nCLASS_NAMES: AuctionsComponent\nIMPORTS: @angular/core, @angular/common, @angular/forms, @angular/router, ../shared/models/auction.model, ../shared/services/auction.service, ../shared/services/bid.service, ../shared/services/auth.service, @angular/core/rxjs-interop\nCONSTRUCTOR_INJECTIONS: AuctionService, BidService, AuthService, Router, ChangeDetectorRef\nINJECTION_VARIABLES: auctionService, bidService, authService, router, cdr\nMETHOD_NAMES: ngOnInit, loadAuctions, viewDetails, viewBids\nSERVICE_CALLS: authService.getCurrentUser, cdr.markForCheck, auctionService.getAllAuctions, router.navigate\nPATH_KEYWORDS: kaz, projects, auction, components, auctions",
       "embedding": [
         -0.12202704697847366,
@@ -6494,6 +6555,10 @@
         "auction",
         "components",
         "home"
+      ],
+      "pattern_set": [
+        "component->routing",
+        "component->service"
       ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\components\\home.component.ts\nROLE: component\nCLASS_NAMES: HomeComponent\nIMPORTS: @angular/core, @angular/common, @angular/router, ../shared/services/auth.service\nCONSTRUCTOR_INJECTIONS: AuthService\nINJECTION_VARIABLES: authService\nMETHOD_NAMES: ngOnInit\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, components, home",
       "embedding": [
@@ -6926,6 +6991,12 @@
         "components",
         "login"
       ],
+      "pattern_set": [
+        "component->model",
+        "component->routing",
+        "component->service",
+        "component->service-call"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\components\\login.component.ts\nROLE: component\nCLASS_NAMES: LoginComponent\nIMPORTS: @angular/core, @angular/common, @angular/forms, @angular/router, ../shared/services/auth.service, ../shared/models/user.model, @angular/common/http, @angular/router, @angular/core/rxjs-interop\nCONSTRUCTOR_INJECTIONS: AuthService, Router, ChangeDetectorRef\nINJECTION_VARIABLES: authService, router, cdr\nMETHOD_NAMES: onLogin\nSERVICE_CALLS: cdr.markForCheck, authService.login, authService.setCurrentUser, router.navigate\nPATH_KEYWORDS: kaz, projects, auction, components, login",
       "embedding": [
         -0.09914699196815491,
@@ -7356,6 +7427,12 @@
         "auction",
         "components",
         "register"
+      ],
+      "pattern_set": [
+        "component->model",
+        "component->routing",
+        "component->service",
+        "component->service-call"
       ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\components\\register.component.ts\nROLE: component\nCLASS_NAMES: RegisterComponent\nIMPORTS: @angular/core, @angular/common, @angular/forms, @angular/router, @angular/router, ../shared/services/auth.service, ../shared/models/user.model, @angular/common/http, @angular/core/rxjs-interop\nCONSTRUCTOR_INJECTIONS: AuthService, Router, ChangeDetectorRef\nINJECTION_VARIABLES: authService, router, cdr\nMETHOD_NAMES: onRegister\nSERVICE_CALLS: cdr.markForCheck, authService.register, authService.setCurrentUser, router.navigate\nPATH_KEYWORDS: kaz, projects, auction, components, register",
       "embedding": [
@@ -7819,6 +7896,11 @@
         "bid",
         "history"
       ],
+      "pattern_set": [
+        "component->routing",
+        "component->service",
+        "component->service-call"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\components\\user-bid-history.component.ts\nROLE: component\nCLASS_NAMES: UserBidHistoryComponent\nIMPORTS: @angular/core, @angular/common, @angular/forms, @angular/router, ../shared/services/bid.service, ../shared/services/auth.service, ../shared/services/auction.service, ../shared/services/winner.service, @angular/core/rxjs-interop\nCONSTRUCTOR_INJECTIONS: BidService, AuthService, AuctionService, WinnerService, Router, ChangeDetectorRef\nINJECTION_VARIABLES: bidService, authService, auctionService, winnerService, router, cdr\nMETHOD_NAMES: ngOnInit, loadUserWins, loadBidHistory, loadAuctionDetails, applyFilter, sortByDate, getAuctionProduct, getAuctionStatus, getTotalBidAmount, getAverageBid, getTotalWins, isWinningBid, viewAuction, goToAuctions, goBack\nSERVICE_CALLS: authService.getCurrentUser, router.navigate, winningAuctionIds.clear, userWins.forEach, winningAuctionIds.add, cdr.markForCheck, bidHistory.forEach, auctionCache.has, auctionService.getAuctionById, auctionCache.set, auctionCache.get, bidHistory.reduce, winningAuctionIds.has\nPATH_KEYWORDS: kaz, projects, auction, components, user, bid, history",
       "embedding": [
         -0.11723338067531586,
@@ -8225,6 +8307,9 @@
         "shared",
         "models"
       ],
+      "pattern_set": [
+        "model->model"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\shared\\models\\auction.model.ts\nROLE: model\nCLASS_NAMES: None\nIMPORTS: ./product.model\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, shared, models",
       "embedding": [
         -0.07671433687210083,
@@ -8630,6 +8715,7 @@
         "models",
         "bid"
       ],
+      "pattern_set": [],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\shared\\models\\bid.model.ts\nROLE: model\nCLASS_NAMES: None\nIMPORTS: None\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, shared, models, bid",
       "embedding": [
         -0.08728538453578949,
@@ -9035,6 +9121,7 @@
         "models",
         "product"
       ],
+      "pattern_set": [],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\shared\\models\\product.model.ts\nROLE: model\nCLASS_NAMES: None\nIMPORTS: None\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, shared, models, product",
       "embedding": [
         -0.0788857713341713,
@@ -9441,6 +9528,7 @@
         "test",
         "product"
       ],
+      "pattern_set": [],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\shared\\models\\test-product.model.ts\nROLE: model\nCLASS_NAMES: None\nIMPORTS: None\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, shared, models, test, product",
       "embedding": [
         -0.07364316284656525,
@@ -9846,6 +9934,7 @@
         "models",
         "user"
       ],
+      "pattern_set": [],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\shared\\models\\user.model.ts\nROLE: model\nCLASS_NAMES: None\nIMPORTS: None\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, shared, models, user",
       "embedding": [
         -0.0737190917134285,
@@ -10251,6 +10340,7 @@
         "models",
         "winner"
       ],
+      "pattern_set": [],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\shared\\models\\winner.model.ts\nROLE: model\nCLASS_NAMES: None\nIMPORTS: None\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, shared, models, winner",
       "embedding": [
         -0.08030447363853455,
@@ -10678,6 +10768,11 @@
         "auction",
         "shared",
         "services"
+      ],
+      "pattern_set": [
+        "service->model",
+        "service->service",
+        "service->service-call"
       ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\shared\\services\\auction.service.ts\nROLE: service\nCLASS_NAMES: AuctionService\nIMPORTS: @angular/core, @angular/common/http, rxjs, ../models/auction.model, ./auth.service\nCONSTRUCTOR_INJECTIONS: HttpClient, AuthService\nINJECTION_VARIABLES: http, authService\nMETHOD_NAMES: getAuthHeaders, getAllAuctions, getAuctionById, getAuctionByProductId, createAuction, updateAuctionStatus, isAuctionActive\nSERVICE_CALLS: authService.getCurrentUser\nPATH_KEYWORDS: kaz, projects, auction, shared, services",
       "embedding": [
@@ -11108,6 +11203,10 @@
         "services",
         "auth"
       ],
+      "pattern_set": [
+        "service->model",
+        "service->service-call"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\shared\\services\\auth.service.ts\nROLE: service\nCLASS_NAMES: AuthService\nIMPORTS: @angular/core, @angular/common/http, rxjs, ../models/user.model\nCONSTRUCTOR_INJECTIONS: HttpClient\nINJECTION_VARIABLES: http\nMETHOD_NAMES: register, login, logout, setCurrentUser, getCurrentUser, isAuthenticated, isAdmin, getUserById, loadUserFromStorage\nSERVICE_CALLS: currentUserSubject.asObservable, currentUserSubject.next\nPATH_KEYWORDS: kaz, projects, auction, shared, services, auth",
       "embedding": [
         -0.11077405512332916,
@@ -11530,6 +11629,9 @@
         "shared",
         "services",
         "bid"
+      ],
+      "pattern_set": [
+        "service->model"
       ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\shared\\services\\bid.service.ts\nROLE: service\nCLASS_NAMES: BidService\nIMPORTS: @angular/core, @angular/common/http, rxjs, ../models/bid.model\nCONSTRUCTOR_INJECTIONS: HttpClient\nINJECTION_VARIABLES: http\nMETHOD_NAMES: getAllBids, placeBid, getBidById, getBidsForAuction, getUserBidHistory, getHighestBid\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, shared, services, bid",
       "embedding": [
@@ -11959,6 +12061,11 @@
         "services",
         "product"
       ],
+      "pattern_set": [
+        "service->model",
+        "service->service",
+        "service->service-call"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\shared\\services\\product.service.ts\nROLE: service\nCLASS_NAMES: ProductService\nIMPORTS: @angular/core, @angular/common/http, rxjs, ../models/product.model, ./auth.service\nCONSTRUCTOR_INJECTIONS: HttpClient, AuthService\nINJECTION_VARIABLES: http, authService\nMETHOD_NAMES: getAuthHeaders, getAllProducts, getProductById, createProduct, updateProduct, deleteProduct\nSERVICE_CALLS: authService.getCurrentUser\nPATH_KEYWORDS: kaz, projects, auction, shared, services, product",
       "embedding": [
         -0.10694604367017746,
@@ -12374,6 +12481,9 @@
         "services",
         "test",
         "products"
+      ],
+      "pattern_set": [
+        "service->model"
       ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\shared\\services\\test-products.service.ts\nROLE: service\nCLASS_NAMES: TestProductsService\nIMPORTS: @angular/core, @angular/common/http, rxjs, ../models/test-product.model\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: getProducts, addProduct\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, shared, services, test, products",
       "embedding": [
@@ -12803,6 +12913,11 @@
         "services",
         "winner"
       ],
+      "pattern_set": [
+        "service->model",
+        "service->service",
+        "service->service-call"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\shared\\services\\winner.service.ts\nROLE: service\nCLASS_NAMES: WinnerService\nIMPORTS: @angular/core, @angular/common/http, rxjs, ../models/winner.model, ./auth.service\nCONSTRUCTOR_INJECTIONS: HttpClient, AuthService\nINJECTION_VARIABLES: http, authService\nMETHOD_NAMES: getAuthHeaders, getAllWinners, assignWinner, getWinnerByAuction, getWinnersByUser, deleteWinner\nSERVICE_CALLS: authService.getCurrentUser\nPATH_KEYWORDS: kaz, projects, auction, shared, services, winner",
       "embedding": [
         -0.10383137315511703,
@@ -13218,6 +13333,10 @@
         "routing",
         "module"
       ],
+      "pattern_set": [
+        "module->component",
+        "module->routing"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\Layout\\test-products\\test-products-routing.module.ts\nROLE: module\nCLASS_NAMES: TestProductsRoutingModule\nIMPORTS: @angular/core, @angular/router, ./test-products-shell.component, ./test-product-list/test-product-list.component, ./test-product-add/test-product-add.component\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, layout, test, products, routing, module",
       "embedding": [
         -0.07708710432052612,
@@ -13628,6 +13747,7 @@
         "products",
         "shell"
       ],
+      "pattern_set": [],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\Layout\\test-products\\test-products-shell.component.ts\nROLE: component\nCLASS_NAMES: TestProductsShellComponent\nIMPORTS: @angular/core\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, layout, test, products, shell",
       "embedding": [
         -0.04660613834857941,
@@ -14044,6 +14164,10 @@
         "test",
         "products",
         "module"
+      ],
+      "pattern_set": [
+        "module->component",
+        "module->routing"
       ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\Layout\\test-products\\test-products.module.ts\nROLE: module\nCLASS_NAMES: TestProductsModule\nIMPORTS: @angular/core, @angular/common, @angular/forms, @angular/router, ./test-products-routing.module, ./test-products-shell.component, ./test-product-list/test-product-list.component, ./test-product-add/test-product-add.component\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, layout, test, products, module",
       "embedding": [
@@ -14468,6 +14592,10 @@
         "product",
         "add"
       ],
+      "pattern_set": [
+        "component->service",
+        "component->service-call"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\Layout\\test-products\\test-product-add\\test-product-add.component.ts\nROLE: component\nCLASS_NAMES: TestProductAddComponent\nIMPORTS: @angular/core, @angular/forms, @angular/core/rxjs-interop, ../../../shared/services/test-products.service\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: submit\nSERVICE_CALLS: form.markAllAsTouched, isSubmitting.set, errorMessage.set, successMessage.set, form.getRawValue, form.reset\nPATH_KEYWORDS: kaz, projects, auction, layout, test, products, product, add",
       "embedding": [
         -0.10221091657876968,
@@ -14888,6 +15016,11 @@
         "product",
         "list"
       ],
+      "pattern_set": [
+        "component->model",
+        "component->service",
+        "component->service-call"
+      ],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\Layout\\test-products\\test-product-list\\test-product-list.component.ts\nROLE: component\nCLASS_NAMES: TestProductListComponent\nIMPORTS: @angular/core, @angular/core/rxjs-interop, ../../../shared/models/test-product.model, ../../../shared/services/test-products.service\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: loadProducts\nSERVICE_CALLS: isLoading.set, errorMessage.set, products.set\nPATH_KEYWORDS: kaz, projects, auction, layout, test, products, product, list",
       "embedding": [
         -0.0908716693520546,
@@ -15298,6 +15431,7 @@
         "request",
         "interceptor"
       ],
+      "pattern_set": [],
       "profile_text": "FILE_PATH: E:\\KAZ\\Projects\\Auction\\frontend\\auction-client\\src\\app\\core\\interceptors\\api-request.interceptor.ts\nROLE: interceptor\nCLASS_NAMES: None\nIMPORTS: @angular/common/http, rxjs\nCONSTRUCTOR_INJECTIONS: None\nINJECTION_VARIABLES: None\nMETHOD_NAMES: None\nSERVICE_CALLS: None\nPATH_KEYWORDS: kaz, projects, auction, core, interceptors, api, request, interceptor",
       "embedding": [
         -0.07355523854494095,
