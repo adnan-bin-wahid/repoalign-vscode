@@ -17,24 +17,27 @@ export function registerFindSimilarFilesAICommand(outputChannel: vscode.OutputCh
 			return;
 		}
 
-		const workspacePath = workspaceFolders[0].uri.fsPath;
+		const activeEditor = vscode.window.activeTextEditor;
 
-		const queryFilePathInput = await vscode.window.showInputBox({
-			prompt: 'Enter the full path of a file inside the current workspace',
-			placeHolder: 'Example: E:/.../src/app/app.component.ts'
-		});
-
-		if (!queryFilePathInput) {
-			vscode.window.showWarningMessage('No file path was entered.');
+		if (!activeEditor) {
+			vscode.window.showWarningMessage('No active file is open in the editor.');
 			return;
 		}
 
+		const workspacePath = workspaceFolders[0].uri.fsPath;
+		const queryFilePath = path.resolve(activeEditor.document.uri.fsPath);
 		const normalizedWorkspacePath = path.resolve(workspacePath);
-		const normalizedQueryFilePath = path.resolve(queryFilePathInput);
 
-		if (!normalizedQueryFilePath.startsWith(normalizedWorkspacePath)) {
+		if (!queryFilePath.startsWith(normalizedWorkspacePath)) {
 			vscode.window.showErrorMessage(
-				'The selected file is not inside the current workspace. Please enter a file path from the opened project.'
+				'The active file is not inside the current workspace.'
+			);
+			return;
+		}
+
+		if (!queryFilePath.toLowerCase().endsWith('.ts')) {
+			vscode.window.showErrorMessage(
+				'The active file is not a TypeScript file. Please open a .ts file.'
 			);
 			return;
 		}
@@ -50,9 +53,9 @@ export function registerFindSimilarFilesAICommand(outputChannel: vscode.OutputCh
 
 			const typeScriptFiles = getTypeScriptFiles(allFiles);
 
-			if (!typeScriptFiles.includes(normalizedQueryFilePath)) {
+			if (!typeScriptFiles.includes(queryFilePath)) {
 				vscode.window.showErrorMessage(
-					'The selected file is not part of the scanned TypeScript candidate set.'
+					'The active file is not part of the scanned TypeScript candidate set.'
 				);
 				return;
 			}
@@ -62,11 +65,11 @@ export function registerFindSimilarFilesAICommand(outputChannel: vscode.OutputCh
 
 			outputChannel.appendLine('=== RepoAlign AI Similar File Retrieval ===');
 			outputChannel.appendLine(`Workspace path: ${workspacePath}`);
-			outputChannel.appendLine(`Query file: ${normalizedQueryFilePath}`);
+			outputChannel.appendLine(`Query file: ${queryFilePath}`);
 			outputChannel.appendLine(`Candidate TypeScript files: ${typeScriptFiles.length}`);
 			outputChannel.appendLine('');
 
-			const result = await findSimilarFiles(normalizedQueryFilePath, typeScriptFiles, 5);
+			const result = await findSimilarFiles(queryFilePath, typeScriptFiles, 5);
 
 			outputChannel.appendLine('Top similar files:');
 			outputChannel.appendLine('------------------------------');

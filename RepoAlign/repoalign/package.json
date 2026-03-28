@@ -10,19 +10,6 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:repoalign.start",
-    "onCommand:repoalign.checkRepo",
-    "onCommand:repoalign.showWorkspacePath",
-    "onCommand:repoalign.listWorkspaceFiles",
-    "onCommand:repoalign.scanWorkspaceRecursively",
-    "onCommand:repoalign.classifyWorkspaceFiles",
-    "onCommand:repoalign.extractTypeScriptImports",
-    "onCommand:repoalign.resolveLocalImports",
-    "onCommand:repoalign.buildDependencyGraph",
-    "onCommand:repoalign.analyzeDependencyPatterns",
-    "onCommand:repoalign.detectSuspiciousPatterns",
-    "onCommand:repoalign.rankSuspiciousFiles",
-    "onCommand:repoalign.explainSuspiciousFiles"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -86,6 +73,10 @@
 {
   "command": "repoalign.findSimilarFilesAI",
   "title": "RepoAlign: Find Similar Files (AI)"
+},
+{
+  "command": "repoalign.compareActiveFilePatterns",
+  "title": "RepoAlign: Compare Active File Against Similar Files"
 }
     ]
   },
