@@ -1,0 +1,10 @@
+#!/bin/sh
+npm run repoalign:precommit
+RESULT=$?
+
+if [ $RESULT -ne 0 ]; then
+  echo "RepoAlign pre-commit check failed."
+  exit 1
+fi
+
+exit 0
