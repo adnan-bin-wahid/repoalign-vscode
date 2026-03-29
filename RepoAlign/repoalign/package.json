@@ -81,6 +81,10 @@
 {
   "command": "repoalign.rebuildSemanticIndex",
   "title": "RepoAlign: Rebuild Semantic Index"
+},
+{
+  "command": "repoalign.analyzeStagedFiles",
+  "title": "RepoAlign: Analyze Staged Files"
 }
     ]
   },
@@ -90,7 +94,8 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "repoalign:precommit": "node ./out/cli/preCommitRunner.js"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
