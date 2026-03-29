@@ -1,4 +1,6 @@
 #!/bin/sh
+cd RepoAlign/repoalign || exit 1
+
 npm run repoalign:precommit
 RESULT=$?
 
