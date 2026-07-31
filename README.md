@@ -17,11 +17,17 @@
 
 ### 🖥️ VS Code Extension in Action
 Below is a screenshot of the **VS Code Extension** analyzing files in `test-project2`. It detects structural anomalies in the active workspace and reports details to the output channel:
-![VS Code Extension Mockup](assets/extension_screenshot.png)
+
+<p align="center">
+  <img src="assets/extension_screenshot.png" alt="VS Code Extension Mockup" width="90%" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
+</p>
 
 ### 📊 Interactive FastAPI Swagger UI API Dashboard
 The FastAPI backend provides an interactive documentation playground where researchers and recruiters can inspect, test, and query all semantic indexing and embedding endpoints:
-![FastAPI Swagger UI](assets/fastapi_swagger_ui.png)
+
+<p align="center">
+  <img src="assets/fastapi_swagger_ui.png" alt="FastAPI Swagger UI" width="90%" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
+</p>
 
 ---
 

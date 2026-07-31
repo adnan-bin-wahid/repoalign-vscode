@@ -302,7 +302,9 @@ RepoAlign is a full-stack application consisting of two main components:
 
 RepoAlign exposes a high-performance FastAPI backend with comprehensive OpenAPI schemas and a fully interactive documentation playground. Recruiter/researcher check is available immediately:
 
-![Interactive Swagger API Docs](assets/fastapi_swagger_ui.png)
+<p align="center">
+  <img src="assets/fastapi_swagger_ui.png" alt="Interactive Swagger API Docs" width="90%" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
+</p>
 
 ### **Directory Structure**
 
