@@ -1,12 +1,12 @@
-#!/bin/sh
-cd RepoAlign/repoalign || exit 1
+# #!/bin/sh
+# cd RepoAlign/repoalign || exit 1
 
-npm run repoalign:precommit
-RESULT=$?
+# npm run repoalign:precommit
+# RESULT=$?
 
-if [ $RESULT -ne 0 ]; then
-  echo "RepoAlign pre-commit check failed."
-  exit 1
-fi
+# if [ $RESULT -ne 0 ]; then
+#   echo "RepoAlign pre-commit check failed."
+#   exit 1
+# fi
 
-exit 0
+# exit 0

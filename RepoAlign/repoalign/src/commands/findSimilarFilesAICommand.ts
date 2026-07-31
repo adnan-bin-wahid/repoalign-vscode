@@ -69,7 +69,7 @@ export function registerFindSimilarFilesAICommand(outputChannel: vscode.OutputCh
 			outputChannel.appendLine(`Workspace path: ${workspacePath}`);
 			outputChannel.appendLine(`Query file: ${queryRelativePath}`);
 			outputChannel.appendLine(`Candidate TypeScript files: ${typeScriptFiles.length}`);
-			outputChannel.appendLine('Retrieval mode: semantic profile embedding');
+			outputChannel.appendLine('Retrieval mode: hybrid semantic profile embedding + graph overlap reranking');
 			outputChannel.appendLine('');
 
 			const indexStatus = await getIndexStatus();
@@ -133,7 +133,9 @@ export function registerFindSimilarFilesAICommand(outputChannel: vscode.OutputCh
 				const relativePath = path.relative(workspacePath, item.file_path).replace(/\\/g, '/');
 
 				outputChannel.appendLine(`${rank}. ${relativePath}`);
-				outputChannel.appendLine(`   Similarity: ${item.similarity}`);
+				outputChannel.appendLine(`   Hybrid score: ${item.similarity}`);
+				outputChannel.appendLine(`   Embedding similarity: ${item.embedding_similarity ?? 'N/A'}`);
+				outputChannel.appendLine(`   Graph overlap score: ${item.graph_overlap_score ?? 'N/A'}`);
 				outputChannel.appendLine(`   Role: ${item.role ?? 'unknown'}`);
 
 				if (item.class_names && item.class_names.length > 0) {
@@ -148,6 +150,12 @@ export function registerFindSimilarFilesAICommand(outputChannel: vscode.OutputCh
 					);
 				} else {
 					outputChannel.appendLine('   Constructor injections: None');
+				}
+
+				if (item.pattern_set && item.pattern_set.length > 0) {
+					outputChannel.appendLine(`   Pattern set: ${item.pattern_set.join(', ')}`);
+				} else {
+					outputChannel.appendLine('   Pattern set: None');
 				}
 
 				outputChannel.appendLine('');

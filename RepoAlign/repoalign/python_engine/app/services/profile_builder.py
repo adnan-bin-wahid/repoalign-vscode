@@ -97,25 +97,50 @@ def extract_service_calls(content: str) -> list[str]:
     return calls
 
 
-def infer_file_role(file_path: str) -> str:
-    lower = file_path.lower()
+def infer_file_role(file_path: str, content: str) -> str:
+    lower_path = file_path.lower()
+    lower_content = content.lower()
 
-    if lower.endswith('.component.ts'):
+    # 1. Strong Angular decorator/content signals
+    if "@component" in lower_content:
+        return "component"
+
+    if "@injectable" in lower_content:
+        return "service"
+
+    if "@ngmodule" in lower_content:
+        return "module"
+
+    if "routes:" in lower_content or "routermodule" in lower_content or "provideRouter".lower() in lower_content:
+        return "routing"
+
+    if "@pipe" in lower_content:
+        return "pipe"
+
+    if "@directive" in lower_content:
+        return "directive"
+
+    # 2. Filename suffix fallback
+    if lower_path.endswith('.component.ts'):
         return 'component'
-    if lower.endswith('.service.ts'):
+    if lower_path.endswith('.service.ts'):
         return 'service'
-    if lower.endswith('.model.ts'):
+    if lower_path.endswith('.model.ts'):
         return 'model'
-    if lower.endswith('.interceptor.ts'):
+    if lower_path.endswith('.interceptor.ts'):
         return 'interceptor'
-    if lower.endswith('.guard.ts'):
+    if lower_path.endswith('.guard.ts'):
         return 'guard'
-    if lower.endswith('.module.ts'):
+    if lower_path.endswith('.module.ts'):
         return 'module'
-    if lower.endswith('.routes.ts') or 'routing.module.ts' in lower:
+    if lower_path.endswith('.routes.ts') or 'routing.module.ts' in lower_path:
         return 'routing'
-    if lower.endswith('.spec.ts') or lower.endswith('.test.ts'):
+    if lower_path.endswith('.spec.ts') or lower_path.endswith('.test.ts'):
         return 'test'
+
+    # 3. Simple interface/type style detection for model-like files
+    if "export interface " in lower_content or "export type " in lower_content:
+        return "model"
 
     return 'typescript-file'
 
@@ -165,7 +190,7 @@ def build_file_profile(file_path: str) -> dict:
 
     profile = {
         "file_path": file_path,
-        "role": infer_file_role(file_path),
+        "role": infer_file_role(file_path, content),
         "imports": extract_imports(content),
         "class_names": extract_class_names(content),
         "constructor_injections": extract_constructor_injections(content),

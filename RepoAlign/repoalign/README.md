@@ -1,8 +1,16 @@
 # RepoAlign
 
-**AI-driven repository-level semantic consistency checker for VS Code**
+<p align="center">
+  <img src="https://img.shields.io/badge/VS_Code-Extension-blue?style=for-the-badge&logo=visual-studio-code" alt="VS Code Extension" />
+  <img src="https://img.shields.io/badge/FastAPI-v0.115+-009688?style=for-the-badge&logo=fastapi" alt="FastAPI Backend" />
+  <img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python" alt="Python Version" />
+  <img src="https://img.shields.io/badge/TypeScript-v5.9+-3178C6?style=for-the-badge&logo=typescript" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" />
+</p>
 
-RepoAlign is a powerful VS Code extension that analyzes your codebase to ensure semantic consistency across your project. It leverages AI to detect inconsistencies in naming conventions, code patterns, and overall repository structure.
+---
+
+**RepoAlign** is a state-of-the-art, AI-driven repository-level semantic consistency checker for VS Code. It bridges static code parsing (TypeScript AST/regex constructs) and deep learning representations to surface structural anomalies, detect service dependency mismatches, and identify semantic drift across massive codebases.
 
 ---
 
@@ -117,7 +125,7 @@ cd repoalign-vscode/RepoAlign/repoalign
 # Navigate to the Python engine directory
 cd python_engine
 
-# Create a virtual environment
+# Create a virtual environment (if not already present)
 python -m venv venv
 
 # Activate the virtual environment
@@ -130,7 +138,7 @@ source venv/bin/activate
 # Install Python dependencies
 pip install -r requirements.txt
 
-# Verify installation (you should see installed packages)
+# Verify installation
 pip list
 ```
 
@@ -174,12 +182,12 @@ venv\Scripts\activate
 # On macOS/Linux:
 source venv/bin/activate
 
-# Start the Flask application
-python app.py
+# Start the FastAPI application via uvicorn
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 
 # You should see output like:
-# * Running on http://127.0.0.1:5000
-# * Press CTRL+C to quit
+# INFO:     Started server process [...]
+# INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 ```
 
 #### **Step 7: Test the VS Code Extension**
@@ -209,7 +217,8 @@ Or, **in VS Code**:
 
 Check that:
 
-- ✅ Python backend is running on `http://127.0.0.1:5000`
+- ✅ Python backend is running on `http://127.0.0.1:8000`
+- ✅ API Swagger docs page is accessible at `http://127.0.0.1:8000/docs`
 - ✅ VS Code extension launches without errors
 - ✅ Commands execute in the Command Palette
 - ✅ No compilation errors in the terminal
@@ -266,12 +275,12 @@ RepoAlign is a full-stack application consisting of two main components:
   - User interaction and feedback
   - API communication with backend
 
-### **Python Backend (Flask API)**
+### **Python Backend (FastAPI)**
 
 - **Location:** `python_engine/` directory
 - **Purpose:** Handles AI-powered semantic analysis and embeddings
-- **Technologies:** Python, Flask, Machine Learning libraries
-- **Port:** 5000 (default)
+- **Technologies:** Python, FastAPI, Pydantic, Uvicorn, SentenceTransformers
+- **Port:** 8000 (default)
 - **Responsibilities:**
   - Semantic similarity analysis
   - File embeddings and indexing
@@ -282,10 +291,18 @@ RepoAlign is a full-stack application consisting of two main components:
 
 1. User opens a VS Code command (e.g., "Check Repository")
 2. VS Code extension processes the command
-3. Extension calls the Python backend API (http://127.0.0.1:5000)
-4. Flask backend performs analysis using ML models
+3. Extension calls the Python backend API (`http://127.0.0.1:8000`)
+4. FastAPI backend performs analysis using ML models
 5. Results are returned to VS Code
 6. Extension displays results to user
+
+---
+
+## 📊 Interactive API Dashboard (Swagger UI)
+
+RepoAlign exposes a high-performance FastAPI backend with comprehensive OpenAPI schemas and a fully interactive documentation playground. Recruiter/researcher check is available immediately:
+
+![Interactive Swagger API Docs](assets/fastapi_swagger_ui.png)
 
 ### **Directory Structure**
 
@@ -332,10 +349,10 @@ cd python_engine
 # Install development dependencies
 pip install -r requirements.txt
 
-# Run Flask in debug mode
-python app.py
+# Run FastAPI backend in reload/development mode
+python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 
-# Output: * Running on http://127.0.0.1:5000
+# Output: INFO:     Uvicorn running on http://127.0.0.1:8000
 ```
 
 **Terminal 2: TypeScript Frontend (Extension Development)**
@@ -468,13 +485,13 @@ pip install -r requirements.txt
 **Run in Development Mode**
 
 ```bash
-python app.py
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
 **Deploy to Production** (if applicable)
 
-- Configure Flask environment variables
-- Use a production WSGI server (gunicorn, uWSGI)
+- Configure environment variables (`PYTHONUNBUFFERED=1`)
+- Use a production ASGI server (gunicorn with uvicorn workers)
 - Set appropriate security headers and CORS policies
 
 ---
@@ -546,9 +563,9 @@ cd python_engine
 # macOS/Linux: source venv/bin/activate
 
 # Start the backend
-python app.py
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 
-# Should output: * Running on http://127.0.0.1:5000
+# Should output: INFO:     Uvicorn running on http://127.0.0.1:8000
 ```
 
 ### Method 1: Debug Mode (Recommended for Development)
@@ -579,11 +596,11 @@ python app.py
 
 3. Install the `.vsix` file in VS Code:
    - Open VS Code
-   - Go to **Extensions** (Ctrl+Shift+X)
-   - Click **⋯** → **Install from VSIX**
-   - Select the generated `.vsix` file
+    - Go to **Extensions** (Ctrl+Shift+X)
+    - Click **⋯** → **Install from VSIX**
+    - Select the generated `.vsix` file
 
-4. Verify the backend is running before using the extension
+4. Verify the backend is running on `http://127.0.0.1:8000` before using the extension
 
 ---
 
@@ -624,7 +641,7 @@ pip cache purge
 pip install -r requirements.txt
 ```
 
-### Issue: Python backend won't start (Flask error)
+### Issue: Python backend won't start (FastAPI error)
 
 **Solution:**
 
@@ -633,14 +650,14 @@ pip install -r requirements.txt
 # Windows: venv\Scripts\activate
 # macOS/Linux: source venv/bin/activate
 
-# Check if port 5000 is in use
-# Windows: netstat -ano | findstr :5000
-# macOS/Linux: lsof -i :5000
+# Check if port 8000 is in use
+# Windows: netstat -ano | findstr :8000
+# macOS/Linux: lsof -i :8000
 
-# If in use, kill the process or change the port in python_engine/app.py
+# If in use, kill the process
 
-# Start Flask app again
-python app.py
+# Start FastAPI app again
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
 ### Issue: npm install fails
@@ -681,7 +698,7 @@ npm run watch
   npm run vscode:prepublish
   ```
 - Reload VS Code window (Ctrl+R in debug window)
-- Verify Python backend is running on http://127.0.0.1:5000
+- Verify Python backend is running on http://127.0.0.1:8000
 
 ### Issue: Linting errors
 
@@ -698,14 +715,14 @@ Fix issues manually or check ESLint configuration in `eslint.config.mjs`.
 **Solution:**
 
 ```bash
-# Find process using port 5000
+# Find process using port 8000
 # Windows:
-netstat -ano | findstr :5000
+netstat -ano | findstr :8000
 
 # macOS/Linux:
-lsof -i :5000
+lsof -i :8000
 
-# Kill the process or modify the port in python_engine/app.py
+# Kill the process or run uvicorn on another port
 ```
 
 ### Issue: Commands don't appear in Command Palette

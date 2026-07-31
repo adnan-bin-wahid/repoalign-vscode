@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 from datetime import datetime
+import profile
 from app.services.profile_builder import build_file_profile
 from app.services.embedder import embed_text
 
@@ -71,6 +72,40 @@ def infer_simple_pattern_set(profile: dict) -> list[str]:
 
     return sorted(list(set(patterns)))
 
+def infer_motif_set(profile: dict) -> list[str]:
+    role = profile["role"]
+    imports = [item.lower() for item in profile["imports"]]
+    service_calls = [item.lower() for item in profile["service_calls"]]
+    method_names = [item.lower() for item in profile["method_names"]]
+
+    motifs = []
+
+    has_service_import = any(".service" in item for item in imports)
+    has_model_import = any(".model" in item for item in imports)
+    has_routing_import = any("router" in item or "route" in item for item in imports)
+    has_service_calls = len(service_calls) > 0
+    has_lifecycle = any(name in {"ngoninit", "ngondestroy", "ngafterviewinit"} for name in method_names)
+
+    if has_service_import and has_service_calls:
+        motifs.append(f"{role}->service->service-call")
+
+    if has_service_import and has_model_import:
+        motifs.append(f"{role}->service->model")
+
+    if has_routing_import and has_service_import:
+        motifs.append(f"{role}->routing->service")
+
+    if has_routing_import and has_service_calls:
+        motifs.append(f"{role}->routing->service-call")
+
+    if has_lifecycle and has_service_calls:
+        motifs.append(f"{role}->lifecycle->service-call")
+
+    if has_lifecycle and has_service_import:
+        motifs.append(f"{role}->lifecycle->service")
+
+    return sorted(list(set(motifs)))
+
 
 def build_profile_index(workspace_path: str) -> dict:
     file_paths = scan_typescript_files(workspace_path)
@@ -80,6 +115,7 @@ def build_profile_index(workspace_path: str) -> dict:
     for file_path in file_paths:
         profile = build_file_profile(file_path)
         profile["pattern_set"] = infer_simple_pattern_set(profile)
+        profile["motif_set"] = infer_motif_set(profile) 
         embedding = embed_text(profile["profile_text"])
 
         indexed_files.append({
@@ -93,6 +129,7 @@ def build_profile_index(workspace_path: str) -> dict:
             "service_calls": profile["service_calls"],
             "path_keywords": profile["path_keywords"],
             "pattern_set": profile["pattern_set"],
+            "motif_set": profile["motif_set"],
             "profile_text": profile["profile_text"],
             "embedding": embedding
         })
